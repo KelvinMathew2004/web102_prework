@@ -165,19 +165,19 @@ allBtn.addEventListener("click", showAllGames);
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
-let underfundedGames = GAMES_JSON.reduce((game) => {
-    return total + 1;
-}, 0);
+let underfundedGames = GAMES_JSON.filter((game) => {
+    return game.pledged < game.goal;
+});
 
 // create a string that explains the number of unfunded games using the ternary operator
-const displayStr = 'A total of $${totalRaised.toLocaleString()} has been raised for ${totalGames.toLocaleString()} ${totalGames > 1 ? "games" : "game"}. Currently, ${underfundedGames.toLocaleString()} ${underfundedGames > 1 ? "games" : "game"} remains unfunded. We need your help to fund these amazing games!';
+const displayStr = `A total of $${totalRaised.toLocaleString()} has been raised for ${totalGames.toLocaleString()} ${totalGames > 1 ? "games" : "game"}. Currently, ${underfundedGames.length.toLocaleString()} ${underfundedGames.length > 1 ? "games remain" : "game remains"} unfunded. We need your help to fund these amazing games!`;
 
 // create a new DOM element containing the template string and append it to the description container
 let message = document.createElement("p");
 
 message.textContent = `${displayStr}`;
 
-appendChild(descriptionContainer, message);
+descriptionContainer.appendChild(message);
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
  * Skills used: spread operator, destructuring, template literals, sort 
@@ -196,9 +196,9 @@ let [firstGame, secondGame] = [...sortedGames];
 // create a new element to hold the name of the top pledge game, then append it to the correct element
 let firstGameName = document.createElement("p");
 firstGameName.textContent = `${firstGame.name}`;
-appendChild(firstGameContainer, firstGameName);
+firstGameContainer.appendChild(firstGameName);
 
 // do the same for the runner up item
 let secondGameName = document.createElement("p");
 secondGameName.textContent = `${secondGame.name}`;
-appendChild(secondGameContainer, secondGameName);
+secondGameContainer.appendChild(secondGameName);
